@@ -74,5 +74,10 @@ typings/
 
 
 ### Personal ###
+# SSL files
+*.crt
+*.key
+
 # TODO file
 TODO
+
