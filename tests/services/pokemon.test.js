@@ -1,6 +1,7 @@
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const sinon = require('sinon');
+const NotEnoughStockOfPokemonError = require('../../errors/NotEnoughStockOfPokemonError');
 const Pokemon = require('../../models/Pokemon');
 const service = require('../../services/pokemon');
 
@@ -135,9 +136,9 @@ describe('[services: pokemon]', () => {
       Pokemon.findOne.restore();
     });
 
-    it('removing 25 units will leave 0 units available', () => service
+    it('removing 25 units will throw NotEnoughStockOfPokemonError', () => service
       .removeFromStock(pokemon.name, 25)
-      .should.eventually.have.property('stock').equal(0));
+      .should.be.rejectedWith(NotEnoughStockOfPokemonError));
 
     it('removing 0 units will leave 20 units available', () => service
       .removeFromStock(pokemon.name, 0)

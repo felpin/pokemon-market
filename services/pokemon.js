@@ -1,4 +1,5 @@
 const parse = require('../parsers/pokemon');
+const NotEnoughStockOfPokemonError = require('../errors/NotEnoughStockOfPokemonError');
 const Pokemon = require('../models/Pokemon');
 
 /**
@@ -42,9 +43,16 @@ const findByNameAndParse = name => findByName(name)
  * @returns {Pokemon} The pokemon information after the operation
  */
 const removeFromStock = (name, quantity) => findByName(name)
-  .then(pokemon => pokemon.update({
-    stock: Math.max(pokemon.stock - quantity, 0),
-  }))
+  .then((pokemon) => {
+    const pokemonStock = pokemon.stock;
+    if (pokemonStock < quantity) {
+      throw new NotEnoughStockOfPokemonError(pokemon.name, pokemonStock, quantity);
+    }
+
+    return pokemon.update({
+      stock: Math.max(pokemon.stock - quantity, 0),
+    });
+  })
   .then(() => findByName(name));
 
 /**
