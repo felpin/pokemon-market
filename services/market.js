@@ -1,9 +1,9 @@
-const request = require('request-promise');
 const pokemonService = require('./pokemon');
 const NotEnoughStockOfPokemonError = require('../errors/NotEnoughStockOfPokemonError');
 const PagarmeTransactionError = require('../errors/PagarmeTransactionError');
 const UnexistentPokemonError = require('../errors/UnexistentPokemonError');
 const UnpaidTransactionError = require('../errors/UnpaidTransactionError');
+const { transaction } = require('../external/pagarme');
 
 /**
  * Do a buy transaction
@@ -29,25 +29,15 @@ const buy = (name, quantity, creditCard) => pokemonService.findByName(name)
       throw new NotEnoughStockOfPokemonError(pokemonName, quantity, pokemonStock);
     }
 
-    return request({
-      uri: 'https://api.pagar.me/1/transactions',
-      method: 'POST',
-      json: {
-        api_key: process.env.PAGARME_API_KEY,
-        amount: quantity * pokemon.price * 100,
-        card_number: creditCard.number,
-        card_expiration_date: creditCard.expirationDate,
-        card_holder_name: creditCard.holderName,
-        card_cvv: creditCard.cvv,
-        metadata: {
-          product: 'pokemon',
-          name: pokemonName,
-          quantity,
-        },
-      },
-    })
-      .then((transaction) => {
-        const transactionStatus = transaction.status;
+    const transactionAmount = quantity * pokemon.price * 100;
+    const transactionMetadata = {
+      product: 'pokemon',
+      name: pokemonName,
+      quantity,
+    };
+    return transaction(creditCard, transactionAmount, transactionMetadata)
+      .then((transactionResponse) => {
+        const transactionStatus = transactionResponse.status;
         if (transactionStatus === 'paid') {
           return pokemonService.removeFromStock(pokemonName, quantity);
         }
