@@ -12,7 +12,7 @@ const schemaForBuy = Joi.object().keys({
     number: Joi.string().regex(regexForNumber, 'credit card').required(),
     expirationDate: Joi.string().regex(/^[0-9]{4}$/, 'expiration date').required(),
     cvv: Joi.string().regex(regexForNumber, 'cvv').required(),
-  }),
+  }).required(),
 });
 
 module.exports = {
