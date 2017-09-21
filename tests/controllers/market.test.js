@@ -2,12 +2,7 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const sinon = require('sinon');
 
-const {
-  NAME_LENGTH,
-  PRICE_MAX_VALUE,
-  PRICE_SCALE,
-  STOCK_MAX_VALUE,
-} = require('../../constants/pokemon');
+const { NAME_LENGTH } = require('../../constants/pokemon');
 const marketController = require('../../controllers/market');
 const marketService = require('../../services/market');
 
