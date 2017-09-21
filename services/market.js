@@ -3,7 +3,7 @@ const NotEnoughStockOfPokemonError = require('../errors/NotEnoughStockOfPokemonE
 const PagarmeTransactionError = require('../errors/PagarmeTransactionError');
 const UnexistentPokemonError = require('../errors/UnexistentPokemonError');
 const UnpaidTransactionError = require('../errors/UnpaidTransactionError');
-const { transaction } = require('../external/pagarme');
+const pagarme = require('../external/pagarme');
 
 /**
  * Do a buy transaction
@@ -35,7 +35,8 @@ const buy = (name, quantity, creditCard) => pokemonService.findByName(name)
       name: pokemonName,
       quantity,
     };
-    return transaction(creditCard, transactionAmount, transactionMetadata)
+
+    return pagarme.transaction(creditCard, transactionAmount, transactionMetadata)
       .then((transactionResponse) => {
         const transactionStatus = transactionResponse.status;
         if (transactionStatus === 'paid') {
