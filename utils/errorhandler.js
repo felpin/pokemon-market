@@ -14,7 +14,7 @@ const handle = res =>
    * @param {Error} error The error
    */
   (error) => {
-    switch (error.name) {
+    switch (error.type) {
       case PagarmeTransactionError.name:
       case UnpaidTransactionError.name:
         res.status(400).send(error);

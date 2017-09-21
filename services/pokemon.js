@@ -53,7 +53,7 @@ const removeFromStock = (name, quantity) => findByName(name)
       stock: Math.max(pokemon.stock - quantity, 0),
     });
   })
-  .then(() => findByName(name));
+  .then(() => findByNameAndParse(name));
 
 /**
  * Creates or updates the pokemon
