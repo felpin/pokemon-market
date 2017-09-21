@@ -1,0 +1,27 @@
+{
+  "name": "pokemon",
+  "version": "1.0.0",
+  "description": "Example of a really bad code",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "dotenv": "^4.0.0",
+    "express": "*",
+    "joi": "^11.0.2",
+    "request": "^2.73.0",
+    "request-promise": "^4.0.0",
+    "sequelize": "^4.8.4",
+    "sqlite3": "^3.1.4"
+  },
+  "devDependencies": {
+    "eslint": "^4.7.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0"
+  }
+}
