@@ -4,21 +4,25 @@ const { schema, schemaForName } = require('../schemas/pokemon');
 
 const getAll = () => pokemonService.findAll();
 
-const getByName = (name) => {
+const getByName = name => new Promise((resolve, reject) => {
   const { error, value: validName } = Joi.validate(name, schemaForName);
 
-  if (error) throw error;
+  if (error) {
+    reject(error);
+  } else {
+    resolve(pokemonService.findByName(validName));
+  }
+});
 
-  return pokemonService.findByName(validName);
-};
-
-const upsert = (pokemon) => {
+const upsert = pokemon => new Promise((resolve, reject) => {
   const { error, value: validPokemon } = Joi.validate(pokemon, schema);
 
-  if (error) throw error;
-
-  return pokemonService.upsert(validPokemon);
-};
+  if (error) {
+    reject(error);
+  } else {
+    resolve(pokemonService.upsert(validPokemon));
+  }
+});
 
 module.exports = {
   getAll,
