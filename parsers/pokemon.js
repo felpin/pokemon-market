@@ -8,15 +8,15 @@
 const parse = ({ name, price, stock }) => {
   const pokemonParsed = {};
 
-  if (name) {
+  if (name !== undefined) {
     pokemonParsed.name = name;
   }
 
-  if (price) {
+  if (price !== undefined) {
     pokemonParsed.price = price;
   }
 
-  if (stock) {
+  if (stock !== undefined) {
     pokemonParsed.stock = stock;
   }
 
