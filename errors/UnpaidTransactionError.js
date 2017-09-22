@@ -6,7 +6,7 @@
 class UnpaidTransactionError extends Error {
   /**
    * Creates an instance of UnpaidTransactionError.
-   * @param {any} status The status of the transaction
+   * @param {string} status The status of the transaction
    * @memberof UnpaidTransactionError
    */
   constructor(status) {
