@@ -2,6 +2,7 @@ const NotEnoughStockOfPokemonError = require('../errors/NotEnoughStockOfPokemonE
 const PagarmeTransactionError = require('../errors/PagarmeTransactionError');
 const UnexistentPokemonError = require('../errors/UnexistentPokemonError');
 const UnpaidTransactionError = require('../errors/UnpaidTransactionError');
+const ValidationError = require('../errors/ValidationError');
 
 /**
  * Creates a function to handle errors
@@ -21,6 +22,7 @@ const handle = res =>
         break;
       case NotEnoughStockOfPokemonError.name:
       case UnexistentPokemonError.name:
+      case ValidationError.name:
         res.status(422).send(error);
         break;
       default:
